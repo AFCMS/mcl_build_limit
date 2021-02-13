@@ -1,14 +1,13 @@
 local c_void = minetest.get_content_id("mcl_core:void")
+
+local limit_overworld = mcl_vars.mg_overworld_max_official+1
+local limit_end = mcl_vars.mg_end_max_official+1
+
 minetest.register_on_generated(function(minp, maxp, seed)
 	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 	local data = vm:get_data(lvm_buffer)
-	local param2_data = vm:get_param2_data(lvm_buffer_param2)
 	local area = VoxelArea:new({MinEdge=emin, MaxEdge=emax})
-	local aream = VoxelArea:new({MinEdge={x=minp.x, y=0, z=minp.z}, MaxEdge={x=maxp.x, y=0, z=maxp.z}})
 	local lvm_used = false
-	local biomemap
-
-	local ymin, ymax
 
 	-- Generate basic layer-based nodes: void, bedrock, realm barrier, lava seas, etc.
 	-- Also perform some basic node replacements.
@@ -48,8 +47,11 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		return lvm_used
 	end
 
-	-- Realm barrier at the top of the Overworld
-	lvm_used = set_layers(c_void, nil, mcl_vars.mg_overworld_max_official+1, mcl_vars.mg_overworld_max_official+1, minp, maxp, lvm_used)
+	-- Void at the top of the Overworld
+	lvm_used = set_layers(c_void, nil, limit_overworld, limit_overworld, minp, maxp, lvm_used)
+	-- Void at the top of the End
+	lvm_used = set_layers(c_void, nil, limit_end, limit_end, minp, maxp, lvm_used)
+	
 	if lvm_used then
 		vm:set_data(data)
 		vm:calc_lighting(nil, nil, shadow)
