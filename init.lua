@@ -1,4 +1,4 @@
-local c_realm_barrier = minetest.get_content_id("mcl_core:realm_barrier")
+local c_void = minetest.get_content_id("mcl_core:void")
 minetest.register_on_generated(function(minp, maxp, seed)
 	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 	local data = vm:get_data(lvm_buffer)
@@ -49,7 +49,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	end
 
 	-- Realm barrier at the top of the Overworld
-	lvm_used = set_layers(c_realm_barrier, nil, mcl_vars.mg_overworld_max_official+1, mcl_vars.mg_overworld_max_official+1, minp, maxp, lvm_used)
+	lvm_used = set_layers(c_void, nil, mcl_vars.mg_overworld_max_official+1, mcl_vars.mg_overworld_max_official+1, minp, maxp, lvm_used)
 	if lvm_used then
 		vm:set_data(data)
 		vm:calc_lighting(nil, nil, shadow)
