@@ -54,7 +54,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	
 	if lvm_used then
 		vm:set_data(data)
-		vm:calc_lighting(nil, nil, shadow)
+		--vm:calc_lighting(nil, nil, shadow)
 		vm:write_to_map()
 	end
 end)
